@@ -141,22 +141,26 @@
   exports.login = function(req, res){
      var message = '';
      var sess = req.session;
-
    
      if(req.method == "POST"){
         var post  = req.body;
         var name= post.user_name;
         var pass= post.password;
       
-        var sql="SELECT message, handle, fname, lname, username FROM `user`,`messages` WHERE `username`='"+name+"' and password = '"+pass+"'";                          
+        var sql="SELECT message, messages.timestamp, handle, fname, lname, username FROM `user`,`messages` WHERE `username`='"+name+"' and password = '"+pass+"'";                          
         db_connection.query(sql, function(err, results){    
 
            if(results.length){
               req.session.userId = results[0].id;
               req.session.user = results[0];
+              req.session.username = results[0].username;
+
               console.log(results[0].fname);
               message = results[0];
-              res.render('profile.ejs', {message:results[0].fname});
+              res.render('profile.ejs', {
+                message:results,
+                data:req.session.username
+              });
              
 
            }
