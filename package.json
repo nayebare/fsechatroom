@@ -1,22 +1,22 @@
-{
-  "name": "authapp",
-  "version": "1.0.0",
-  "description": "fsechat bot",
-  "main": "app.js",
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "ejs": "^2.5.7",
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "mysql": "^2.15.0",
-    "nodemon": "^1.14.10",
-    "req-flash": "0.0.3",
-    "socket.io": "^2.0.4"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "micheal.nayebare",
-  "license": "ISC"
-}
+  {
+    "name": "authapp",
+    "version": "1.0.0",
+    "description": "fsechat bot",
+    "main": "app.js",
+    "dependencies": {
+      "body-parser": "^1.18.2",
+      "ejs": "^2.5.7",
+      "express": "^4.16.2",
+      "express-session": "^1.15.6",
+      "mysql": "^2.15.0",
+      "nodemon": "^1.14.10",
+      "req-flash": "0.0.3",
+      "socket.io": "^2.0.4"
+    },
+    "devDependencies": {},
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "micheal.nayebare",
+    "license": "ISC"
+  }

@@ -1,53 +1,50 @@
-<html lang="en">
- 
-   <%- include header %>
-   <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
+    <html lang="en">
+     
+       <%- include header %>
+       <!-- Main component for a primary marketing message or call to action -->
+          <div class="jumbotron">
 
 
 
-      <div id="mario-chat">
+          <div id="mario-chat">
 
-  <% if (message.length > 0) { %>
-   <div class="alert alert-success col-sm-12">Welcome: <%= message %></div>
-    <% } %>
-                                   
-
- <div class="alert alert-info col-sm-12">Current Users Online:</div>
-
-
-    <h2>Fse Chat Application: </h2>
+      <% if (message.length > 0) { %>
+       <div class="alert alert-success col-sm-12">Welcome: <%= message %></div>
+        <% } %>
+                                       
 
 
 
-</div>
-    <div id="chat-window">
+        <h2>Fse Chat Application: </h2>
+
+    </div>
+        <div id="chat-window">
 
 
 
-    <div id="output"> 
-<ul>
+        <div id="output"> 
+    <ul>
 
-
-</div>
-
-    <div id="feedback"></div>
-
-
-     </div>
-
-     <input id="handle" type="hidden" placeholder="Handle" value="<%= message %>" />
-
-
-     <input id="message" type="text" placeholder="Message"/>
-
-     <button id="send">Post</button>
 
     </div>
 
+        <div id="feedback"></div>
 
 
-  <script src = "../js/chat.js" type="text/javascript"></script>
-      </div>
+         </div>
 
-    <%- include footer %>
+         <input id="handle" type="hidden" placeholder="Handle" value="<%= message %>" />
+
+
+         <input id="message" type="text" placeholder="Message"/>
+
+         <button id="send">Post</button>
+
+        </div>
+
+
+
+      <script src = "../js/chat.js" type="text/javascript"></script>
+          </div>
+
+        <%- include footer %>
