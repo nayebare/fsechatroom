@@ -101,21 +101,13 @@
 
 
   //get all messages
-  exports.getallmessages = function(req,res){
+  exports.getallusers = function(req,res,next){
               //show all message after login
 
-      var sql="SELECT * FROM `messages`"; 
-      db_connection.query(sql, function(err, results){    
-
-           if(results.length){
-           	for(x in results){
-                  res.locals.print =  results[x];
-                  console.log(results[x]);
-              }
-              var all_messages = results[0];
-            //res.render('profile.ejs', {message:results[0].lname}); 
-
-           }
+      var sql="SELECT * FROM `user`"; 
+      db_connection.query(sql, function(err, rows){    
+        req.users = rows;
+        return next();
            });
 
            }
@@ -168,18 +160,33 @@
      }        
   };
 
+
+    //show users who are online 
+    exports.usersonline = function(req,res,next){
+      var sql="SELECT * FROM `user` WHERE online ='online'"; 
+      db_connection.query(sql, function(err, rows){    
+        req.usersonline = rows;
+        console.log(rows);
+        return next();
+           });
+
+           }
+
   //use this url as middleware
   //build the function to select all messages and let serve as middle ware
 
   exports.rendermassagedata = function(req, res) {
-      res.render('profile.ejs', {
+      res.render('chatroom.ejs', {
           user_data: req.message,
           message_data: req.data,
-          username: req.session_username
+          username: req.session_username,
+          users_info: req.users,
+          users_online: req.usersonline
        
       });
   }
   
+
 
 
   //call for the dashboard
@@ -188,7 +195,7 @@
   var user =  req.session.user,
   userId = req.session.userId;
   if(userId == null){
-  res.redirect("/home/dashboard");
+  res.redirect("/login");
   return;
   }
 

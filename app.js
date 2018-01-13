@@ -46,7 +46,7 @@
 
       //call the routes
       app.post('/signup', user.checkusername,user.signup,user.rendersigup);
-      app.post('/login', user.login,user.showmessages,user.rendermassagedata);//call for login post
+      app.post('/login', user.login,user.showmessages,user.getallusers,user.usersonline,user.rendermassagedata);//call for login post
 
       //app.get('/login', user.showmessages, user.renderloginPage);
 

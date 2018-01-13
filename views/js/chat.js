@@ -46,8 +46,11 @@
     			handle: handle.value
     		});
     		
-                //clear the input field
+            //clear the input field
                    document.getElementById("message").value = '';
+
+              //also end the typing message notification
+               feedback.innerHTML = " ";
              }
           });
 
@@ -69,7 +72,7 @@
     //listen for the typing message
     socket.on('typing',function(data){
 
-    	feedback.innerHTML='<p><em>'+data+' is typing a message...</em></p>';
+    	feedback.innerHTML='<p style="color:red;"><em>'+data+' is typing a message...</em></p>';
     });
 
     //broadcating that user has entered  the chatroom
@@ -79,7 +82,7 @@
     //listen for the typing message
     socket.on('adduser',function(data){
 
-      feedback.innerHTML='<p><em>'+data+' has joined chat...</em></p>';
+      feedback.innerHTML='<p style="color:red;"><em>'+data+' has joined chat...</em></p>';
     });
 
   //get socke to broadcast all messages

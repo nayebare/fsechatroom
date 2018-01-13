@@ -1,0 +1,258 @@
+ <html lang="en">
+
+
+  <%- include header %>
+
+<div class="container fill">
+    <div class="row chat-wrap">
+
+        <!-- Contacts & Conversations -->
+        <div class="col-sm-3 panel-wrap">
+
+            <!-- Overlay Menu / Contacts -->
+            <div class="col-sm-12 section-wrap collapse" id="Contacts">
+
+                <!--Header-->
+                <div class="row header-wrap">
+                    <div class="chat-header col-sm-12">
+                        <h4>Select a Contact</h4>
+                        <div class="header-button">
+                            <a class="btn pull-right" href="#Contacts" data-toggle="collapse">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Contacts-->
+                <div class="row content-wrap">
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                    <div class="contact btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">Walter White</h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--Left Menu / Conversation List-->
+            <div class="col-sm-12 section-wrap">
+
+                <!--Header-->
+                <div class="row header-wrap">
+                    <div class="chat-header col-sm-12">
+                        <h4 id="username"> FSE Registered Members: </h4>
+                        <div class="header-button">
+                            <a class="btn pull-right" href="/logout" data-toggle="collapse">
+                                <i class="fa fa-sign-out fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Conversations-->
+                <div class="row content-wrap">
+
+
+             <% for(var i=0; i < users_info.length; i++) { %>
+
+                    <div class="conversation btn">
+                        <div class="media-body">
+                        <h5 style="color:black" class="media-heading" id="contactName"><b><%= users_info[i].fname %> <%= users_info[i].lname %></b> </h5>
+                            <small class="pull-right time">Joined on <%= users_info[i].timestamp.toLocaleString()%></small>
+                        </div>
+                    </div>
+
+                 <% } %>
+
+                
+                    <div class="conversation btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">....</h5>
+                            <small class="pull-right time">Last seen 12:10am</small>
+                        </div>
+                    </div>
+
+                
+
+                    <div class="conversation btn">
+                        <div class="media-body">
+                            <h5 class="media-heading">.....</h5>
+                            <small class="pull-right time">Last seen 12:10am</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Messages & Info -->
+        <div class="col-sm-9 panel-wrap">
+
+            <!--Main Content / Message List-->
+            <div class="col-sm-9 section-wrap" id="Messages">
+
+                <!--Header-->
+                <div class="row header-wrap">
+                    <div class="chat-header col-sm-12">
+                        <h4> Welcome:  <%= username %>  to FSE-2018 Chat Room Application</h4>
+                        <div class="header-button">
+                            <a class="btn pull-right info-btn">
+                                <i class="fa fa-info-circle fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Messages-->
+
+
+                <div class="row content-wrap messages" id="output">
+
+            <% for(var i=0; i < message_data.length; i++) { %>
+
+                    <div class="msg">
+                        <div class="media-body">
+                         <h5 class="media-heading"><b><%= message_data[i].handle %></b></h5> 
+                           <small class="pull-right time"><i class="fa fa-clock-o"></i> <%= message_data[i].timestamp.toLocaleString(); %></small>
+                          <small class="col-sm-11"> <%= message_data[i].message %> </small>
+                
+                        </div>
+                    </div>
+
+                    <% } %>
+
+
+                </div>
+             
+
+                    <div id="outlook"></div>
+                   
+
+          <input id="handle" type="hidden" placeholder="Handle" value="<%= username %>" />
+
+                <!--Message box & Send Button-->
+                <div class="row send-wrap">
+                    <div class="send-message">
+                        <div class="message-text">
+                            <textarea id="message" class="no-resize-bar form-control" rows="2" placeholder="Write a message..."></textarea>
+                        </div>
+                        <div class="send-button">
+                            <a id="send" class="btn">Send <i class="fa fa-send"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <!--Sliding Menu / Conversation Members-->
+            <div class="col-sm-3 section-wrap" id="Members">
+
+                <!--Header-->
+                <div class="row header-wrap">
+                    <div class="chat-header col-sm-12">
+                        <h4>Alerts / Online Users</h4>
+                        <div class="header-button">
+                            <a class="btn pull-right info-btn">
+                                <i class="fa fa-close"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Members-->
+
+                 
+
+                <div class="row content-wrap">
+                    <div id="feedback"></div>
+
+          <% for(var i=0; i < users_online.length; i++) { %>
+
+                    <div class="contact">
+                        <div class="media-body">
+                            <h5 class="media-heading" style="color:green;"><b><%=users_online.fname %><%=users_online[i].lname %></b></h5>
+                            <small class="pull-left time" id="feedback"><i>Status: <%=users_online[i].online %></i></small>
+                        </div>
+                    </div>
+            <% } %>
+
+                    <div class="contact">
+                        <div class="media-body">
+                            <h5 class="media-heading">.....</h5>
+                            <small class="pull-left time"><i>Invited</i></small>
+                        </div>
+                    </div>
+
+                    <div class="contact">
+                        <div class="media-body">
+                            <h5 class="media-heading">....</h5>
+                            <small class="pull-left time"><i>Owner</i></small>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src = "../js/chat.js" type="text/javascript"></script>
+</html>
