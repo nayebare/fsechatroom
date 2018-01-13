@@ -109,7 +109,7 @@
                     <div class="conversation btn">
                         <div class="media-body">
                         <h5 style="color:black" class="media-heading" id="contactName"><b><%= users_info[i].fname %> <%= users_info[i].lname %></b> </h5>
-                            <small class="pull-right time">Joined on <%= users_info[i].timestamp.toLocaleString()%></small>
+                            <small class="pull-right time">Joined:<%= users_info[i].timestamp.toLocaleString()%></small>
                         </div>
                     </div>
 
@@ -118,8 +118,8 @@
                 
                     <div class="conversation btn">
                         <div class="media-body">
-                            <h5 class="media-heading">....</h5>
-                            <small class="pull-right time">Last seen 12:10am</small>
+                            <h5 class="media-heading"><a href="">Attach File</a></h5>
+                            <small class="pull-right time"></small>
                         </div>
                     </div>
 
@@ -127,8 +127,8 @@
 
                     <div class="conversation btn">
                         <div class="media-body">
-                            <h5 class="media-heading">.....</h5>
-                            <small class="pull-right time">Last seen 12:10am</small>
+                            <h5 class="media-heading"><a href="">Settings</a></h5>
+                            <small class="pull-right time"></small>
                         </div>
                     </div>
                 </div>
@@ -205,7 +205,7 @@
                 <!--Header-->
                 <div class="row header-wrap">
                     <div class="chat-header col-sm-12">
-                        <h4>Alerts / Online Users</h4>
+                        <h4>Alerts | Online</h4>
                         <div class="header-button">
                             <a class="btn pull-right info-btn">
                                 <i class="fa fa-close"></i>
@@ -225,7 +225,7 @@
 
                     <div class="contact">
                         <div class="media-body">
-                            <h5 class="media-heading" style="color:green;"><b><%=users_online.fname %><%=users_online[i].lname %></b></h5>
+                            <h5 class="media-heading" style="color:green;"><a href="/privatechat" ><b><%=users_online.fname %><%=users_online[i].lname %></b></a></h5>
                             <small class="pull-left time" id="feedback"><i>Status: <%=users_online[i].online %></i></small>
                         </div>
                     </div>

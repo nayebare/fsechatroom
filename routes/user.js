@@ -7,7 +7,8 @@
   var bodyParser=require("body-parser");
   var fs = require('fs');
 
-
+   // set 
+    var sess;
   //function to make sure the username is not the same
   exports.checkusername = function(req, res, next){
 
@@ -46,7 +47,7 @@
 
   exports.signup = function(req, res , next){
 
-      message = '';
+        message = '';
         lname= req.body.first_name;
         fname = req.body.last_name;
         username = req.body.user_name;
@@ -68,7 +69,8 @@
       fname: req.body.last_name,
       username: req.body.user_name,
       password: req.body.password,
-      timestamp: currentDate
+      timestamp: currentDate,
+      online: 'offline'
     		}
 
 
@@ -134,19 +136,22 @@
 
   exports.login = function(req, res,next){
      var message = '';
-     var sess = req.session;
-   
+     var sess;
      if(req.method == "POST"){
         var post  = req.body;
         var name = post.user_name;
         var pass = post.password;
+        var sess = req.session;
+
        
-        var sql="SELECT  fname, lname, username,password FROM `user` WHERE `username`='"+name+"' and password = '"+pass+"'";                          
+        var sql="SELECT id, fname, lname, username,password FROM `user` WHERE `username`='"+name+"' and password = '"+pass+"'";                          
         db_connection.query(sql, function(err, results){    
 
            if(results.length){
               req.message = results;
               req.session_username = results[0].username;
+              sess.userId = results[0].id;
+              console.log(sess.userId);
               return next();
            }
            else{
@@ -157,7 +162,12 @@
         });
      } else {
         res.render('index.ejs',{message: message});
-     }        
+     }     
+
+     //compound the session to be used elsewhere
+        // YOUR CODE HERE TO GET COMPORT AND COMMAND
+     sess.comport; 
+     sess.command;   
   };
 
 
@@ -172,6 +182,20 @@
 
            }
 
+    //lets update the status of the user after login into the database
+/*
+    exports.updateuser = function(req,res,next){
+     var  userId = req.userId;
+      var sql="UPDATE user SET online = 'online' WHERE id = +'"+userId +"'"; 
+      db_connection.query(sql, function(err, rows){ 
+         req.update_status =  "updated status";
+         return next();
+           });
+
+           }
+           */
+
+
   //use this url as middleware
   //build the function to select all messages and let serve as middle ware
 
@@ -181,7 +205,7 @@
           message_data: req.data,
           username: req.session_username,
           users_info: req.users,
-          users_online: req.usersonline
+          users_online: req.usersonline,
        
       });
   }
