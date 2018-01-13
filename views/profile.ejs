@@ -8,13 +8,10 @@
 
           <div id="mario-chat">
 
-      <% if (message.length > 0) { %>
-       <div class="alert alert-success col-sm-12">Welcome: <%= data %></div>
+      <% if (user_data.length > 0) { %>
+       <div class="alert alert-success col-sm-12">Welcome: <%= username %></div>
         <% } %>
                                        
-
-
-
         <h2>Fse Chat Application: </h2>
 
     </div>
@@ -22,27 +19,23 @@
 
 
 
-        <div id="outputW"> 
-    
-    <% for(var i=0; i < message.length; i++) { %>
-   <ul>
-     <p><%= message[i].handle %> <b> <%= message[i].timestamp %></br> 
-     <%= message[i].message %></p>
-   </ul>
-   <% } %>
-    </div>
+        <div id="output"> 
+          
+            <% for(var i=0; i < message_data.length; i++) { %>
 
-<div id="output"> 
+             <p><%= message_data[i].handle %>:  <%= message_data[i].timestamp %></br> 
+             <%= message_data[i].message %>
+             </p>
 
-</div>
-
-
+           <% } %>
+            </div>
+          
         <div id="feedback"></div>
 
 
          </div>
 
-         <input id="handle" type="hidden" placeholder="Handle" value="<%= data %>" />
+         <input id="handle" type="hidden" placeholder="Handle" value="<%= username %>" />
 
 
          <input id="message" type="text" placeholder="Message"/>

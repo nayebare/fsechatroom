@@ -45,8 +45,8 @@
       app.use(express.static(path.join(__dirname, '/views')));
 
       //call the routes
-      app.post('/signup', user.signup,user.checkusername,user.rendersigup);
-      app.post('/login', user.login);//call for login post
+      app.post('/signup', user.checkusername,user.signup,user.rendersigup);
+      app.post('/login', user.login,user.showmessages,user.rendermassagedata);//call for login post
 
       //app.get('/login', user.showmessages, user.renderloginPage);
 
@@ -105,23 +105,7 @@
         });
        });
 
-// select all messages from the  database
 
-       socket.on('showmessages', function(data){
-
-        var sql="SELECT message, handle timestamp FROM `messages`"; 
-
-        db_connection.query(sql, function(err, results){ 
-
-        if (err) {
-          console.log("error ocurred",err);
-        }else{
-
-       io.sockets.emit('showmessages', results[0]);
-          console.log('The solution is: ', results[0]);
-        }
-        });
-       });
 
 
         //creating another event listener
