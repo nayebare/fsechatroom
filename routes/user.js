@@ -6,9 +6,8 @@
   var currentDate = new Date().toLocaleString(); 
   var bodyParser=require("body-parser");
   var fs = require('fs');
+  var session = require('client-sessions');
 
-   // set 
-    var sess;
   //function to make sure the username is not the same
   exports.checkusername = function(req, res, next){
 
@@ -145,13 +144,16 @@
 
        
         var sql="SELECT id, fname, lname, username,password FROM `user` WHERE `username`='"+name+"' and password = '"+pass+"'";                          
-        db_connection.query(sql, function(err, results){    
+        db_connection.query(sql, function(err, results){   
+            var session_usedId = results[0].id; 
+             req.session.user = results[0].id;
+
 
            if(results.length){
               req.message = results;
               req.session_username = results[0].username;
               sess.userId = results[0].id;
-              console.log(sess.userId);
+              //console.log(sess.userId);
               return next();
            }
            else{
@@ -176,24 +178,12 @@
       var sql="SELECT * FROM `user` WHERE online ='online'"; 
       db_connection.query(sql, function(err, rows){    
         req.usersonline = rows;
-        console.log(rows);
+        //console.log(rows);
         return next();
            });
 
            }
 
-    //lets update the status of the user after login into the database
-/*
-    exports.updateuser = function(req,res,next){
-     var  userId = req.userId;
-      var sql="UPDATE user SET online = 'online' WHERE id = +'"+userId +"'"; 
-      db_connection.query(sql, function(err, rows){ 
-         req.update_status =  "updated status";
-         return next();
-           });
-
-           }
-           */
 
 
   //use this url as middleware
@@ -205,11 +195,27 @@
           message_data: req.data,
           username: req.session_username,
           users_info: req.users,
-          users_online: req.usersonline,
+          users_online: req.usersonline
        
       });
   }
   
+
+    //lets update the status of the user after login into the database
+
+    exports.updateuser = function(req,res,next){
+   
+     var userId = req.session.userId;
+      
+      var sql="UPDATE user SET `online` = 'online' WHERE `user`.`id` = +'"+userId+"'"; 
+      db_connection.query(sql, function(err, rows){ 
+         //console.log(err);
+        // console.log(userId);
+         return next();
+           });
+
+           }
+           
 
 
 

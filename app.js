@@ -9,11 +9,15 @@
       var  path = require('path');
       var db_connection  = require('./middleware/database.js');
       var  socket = require('socket.io');
+      var session = require('client-sessions');
 
       //var methodOverride = require('method-override');
       var app = express();
       //var mysql      = require('mysql');
       var bodyParser=require("body-parser");
+
+      //use router
+      var router = express.Router();
 
       //global array to store  data
       var notes = [];
@@ -27,12 +31,19 @@
       //initiate session
       var session = require('express-session');
       app.use(session({
-        secret: 'keyboard cat',
+        secret: 'hashkey',
         resave: false,
         saveUninitialized: true,
         cookie: { maxAge: 60000 }
       }))
 
+
+          app.use(session({
+        cookieName: 'session',
+        secret: 'random_string_goes_here',
+        duration: 30 * 60 * 1000,
+        activeDuration: 5 * 60 * 1000,
+      }));
 
        
       // all environments
@@ -46,7 +57,7 @@
 
       //call the routes
       app.post('/signup', user.checkusername,user.signup,user.rendersigup);
-      app.post('/login', user.login,user.showmessages,user.getallusers,user.usersonline,user.rendermassagedata);//call for login post
+      app.post('/login', user.login,user.updateuser,user.showmessages,user.getallusers,user.usersonline,user.rendermassagedata);//call for login post
 
       //app.get('/login', user.showmessages, user.renderloginPage);
 
