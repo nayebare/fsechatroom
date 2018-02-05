@@ -30,22 +30,27 @@
 
       //initiate session
       var session = require('express-session');
+
       app.use(session({
         secret: 'hashkey',
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 60000 }
+        cookie: { maxAge: 60000 },
+        saveUninitialized: true,
+         proxy: true,
+         resave: true,
+         saveUninitialized: true
       }))
 
-
-          app.use(session({
+    /*
+  app.use(session({
         cookieName: 'session',
         secret: 'random_string_goes_here',
         duration: 30 * 60 * 1000,
         activeDuration: 5 * 60 * 1000,
       }));
+*/
 
-       
       // all environments
       app.set('port', process.env.PORT || 8080);
       app.set('views', __dirname + '/views');
@@ -64,18 +69,22 @@
       app.get('/', routes.index);//call for main index page
       app.get('/login', routes.index);//call for login page
       app.get('/signup', user.signup);//call for signup page
-     
+
 
       //get the dashboard
       app.get('/home/dashboard', user.dashboard);
-
+      app.get('/logout', user.updateuserlogout,user.sessiondestroy,);
       //logout user
+      /*
       app.get('/logout', function(req, res){
          req.session.destroy(function(){
             console.log("user logged out.")
          });
          res.redirect('/login');
       });
+      */
+
+
 
        app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -132,7 +141,3 @@
 
 
       });
-
-
-
-

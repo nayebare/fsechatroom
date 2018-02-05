@@ -3,7 +3,7 @@
   var http = require('http');
   var  path = require('path');
   var db_connection  = require('../middleware/database.js');// link  from the parent folder to actualy folder
-  var currentDate = new Date().toLocaleString(); 
+  var currentDate = new Date().toLocaleString();
   var bodyParser=require("body-parser");
   var fs = require('fs');
   var session = require('client-sessions');
@@ -24,21 +24,21 @@
 
       }
       else{
-      
-        var sql="SELECT username FROM `user` WHERE `username`='"+username+"'";                          
-        db_connection.query(sql, function(err, results){    
+
+        var sql="SELECT username FROM `user` WHERE `username`='"+username+"'";
+        db_connection.query(sql, function(err, results){
             console.log(err);
            if(results.length !== 0){
             message="The Username name exists";
               res.render('signup.ejs',{message:message});
            }
            else{
-              return next(); 
+              return next();
            }
-           
+
 
         });
-        }      
+        }
   };
 
 
@@ -51,10 +51,10 @@
         fname = req.body.last_name;
         username = req.body.user_name;
         pass = req.body.pass;
-      
+
 
        if(lname =='' || fname =='' || username =='' || pass ==''){
-      
+
          req.message =  "Fill in all the fields please";
            return next();
 
@@ -105,8 +105,8 @@
   exports.getallusers = function(req,res,next){
               //show all message after login
 
-      var sql="SELECT * FROM `user`"; 
-      db_connection.query(sql, function(err, rows){    
+      var sql="SELECT * FROM `user`";
+      db_connection.query(sql, function(err, rows){
         req.users = rows;
         return next();
            });
@@ -125,8 +125,8 @@
               return next();
           }
           else{
-          res.render('profile.ejs'); /* Render the error page. */ 
-          }           
+          res.render('profile.ejs'); /* Render the error page. */
+          }
       });
   }
 
@@ -142,10 +142,10 @@
         var pass = post.password;
         var sess = req.session;
 
-       
-        var sql="SELECT id, fname, lname, username,password FROM `user` WHERE `username`='"+name+"' and password = '"+pass+"'";                          
-        db_connection.query(sql, function(err, results){   
-            var session_usedId = results[0].id; 
+
+        var sql="SELECT id, fname, lname, username,password FROM `user` WHERE `username`='"+name+"' and password = '"+pass+"'";
+        db_connection.query(sql, function(err, results){
+            var session_usedId = results[0].id;
              req.session.user = results[0].id;
 
 
@@ -160,23 +160,23 @@
               message = 'Wrong Credentials.';
               res.render('index.ejs',{message: message});
            }
-                  
+
         });
      } else {
         res.render('index.ejs',{message: message});
-     }     
+     }
 
      //compound the session to be used elsewhere
         // YOUR CODE HERE TO GET COMPORT AND COMMAND
-     sess.comport; 
-     sess.command;   
+     sess.comport;
+     sess.command;
   };
 
 
-    //show users who are online 
+    //show users who are online
     exports.usersonline = function(req,res,next){
-      var sql="SELECT * FROM `user` WHERE online ='online'"; 
-      db_connection.query(sql, function(err, rows){    
+      var sql="SELECT * FROM `user` WHERE online ='online'";
+      db_connection.query(sql, function(err, rows){
         req.usersonline = rows;
         //console.log(rows);
         return next();
@@ -196,28 +196,61 @@
           username: req.session_username,
           users_info: req.users,
           users_online: req.usersonline
-       
+
       });
   }
-  
+
+
+     exports.updateuser = function(req,res,next){
+      var userId = req.session.userId;
+
+       var sql="UPDATE user SET `online` = 'online' WHERE `user`.`id` = +'"+userId+"'";
+       db_connection.query(sql, function(err, rows){
+          //console.log(err);
+         // console.log(userId);
+          return next();
+            });
+
+            }
+
+
+  // sesion destroy userlogged
+          exports.sessiondestroy = function(req,res,next){
+             req.session.destroy(function(){
+                console.log("user logged out.")
+                //send a broadcast message
+             });
+             res.redirect('/login');
+           }
+
+  //lets update the status of the user after login into the database
+
+  // update the user on logut
+          exports.updateuserlogout = function(req,res,next){
+          var userId = req.session.userId;
+
+        var sql="UPDATE user SET `online` = 'offline' WHERE `user`.`id` = +'"+userId+"'";
+        db_connection.query(sql, function(err, rows){
+           //console.log(err);
+           console.log(userId);
+         return next();
+             });
+             }
 
     //lets update the status of the user after login into the database
 
     exports.updateuser = function(req,res,next){
-   
+
      var userId = req.session.userId;
-      
-      var sql="UPDATE user SET `online` = 'online' WHERE `user`.`id` = +'"+userId+"'"; 
-      db_connection.query(sql, function(err, rows){ 
+
+      var sql="UPDATE user SET `online` = 'online' WHERE `user`.`id` = +'"+userId+"'";
+      db_connection.query(sql, function(err, rows){
          //console.log(err);
         // console.log(userId);
          return next();
            });
 
            }
-           
-
-
 
   //call for the dashboard
 
@@ -232,15 +265,12 @@
 
   var sql="SELECT * FROM `user` WHERE `id`='"+userId+"'";
      db_connection.query(sql, function(err, results){
-    
+
      //console.log(results);
 
     // message = results[0].id;
-    
-     res.render('profile.ejs', {message:message});   
-    
+
+     res.render('profile.ejs', {message:message});
+
   });
   };
-
-
-
